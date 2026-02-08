@@ -10,7 +10,6 @@ class userSignup(BaseModel):
     role: UserRole
     gender: str
 
-
 class userLogin(BaseModel):
     email: EmailStr
     password: str
