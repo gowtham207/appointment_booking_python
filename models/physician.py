@@ -16,7 +16,8 @@ class Physician(Base, TimestampMixin):
     specialization = Column(String(150))
     experience_years = Column(Integer)
     license_number = Column(String(100))
-
+    org_id = Column(UUID(as_uuid=True), ForeignKey(
+        "organizations.id"), nullable=False)
     user = relationship("User", back_populates="physician")
     locations = relationship("PhysicianLocation", back_populates="physician")
     slots = relationship("Slot", back_populates="physician")

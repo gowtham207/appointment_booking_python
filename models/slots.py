@@ -22,5 +22,6 @@ class Slot(Base, TimestampMixin):
     start_time = Column(Time, nullable=False)
     end_time = Column(Time, nullable=False)
     is_available = Column(Boolean, default=True)
-
+    org_id = Column(UUID(as_uuid=True), ForeignKey(
+        "organizations.id"), nullable=False)
     physician = relationship("Physician", back_populates="slots")

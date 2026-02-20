@@ -17,5 +17,7 @@ class Location(Base, TimestampMixin):
     state = Column(String(100))
     country = Column(String(100))
     postal_code = Column(String(20))
+    org_id = Column(Integer, ForeignKey("organizations.id"), nullable=False)
+
 
     physicians = relationship("PhysicianLocation", back_populates="location")

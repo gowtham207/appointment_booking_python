@@ -8,3 +8,4 @@ from models.location import Location
 from models.physician import Physician
 from models.physician_location import PhysicianLocation
 from models.slots import Slot
+from models.org import Organization

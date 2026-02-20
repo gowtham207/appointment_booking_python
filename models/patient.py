@@ -19,5 +19,7 @@ class Patient(Base, TimestampMixin):
     gender = Column(Enum(Gender))
     phone = Column(String(20))
     email = Column(String(150))
+    org_id = Column(UUID(as_uuid=True), ForeignKey(
+        "organizations.id"), nullable=False)
 
     user = relationship("User", back_populates="patient")

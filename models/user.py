@@ -22,6 +22,7 @@ class User(Base, TimestampMixin):
     gender = Column(Enum(Gender))
     mfa_enabled = Column(Boolean, default=False)
     last_login = Column(DateTime, nullable=True, server_default=func.now())
-
+    org_id = Column(UUID(as_uuid=True), ForeignKey(
+        "organizations.id"), nullable=False)
     physician = relationship("Physician", back_populates="user", uselist=False)
     patient = relationship("Patient", back_populates="user", uselist=False)

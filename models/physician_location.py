@@ -17,6 +17,7 @@ class PhysicianLocation(Base, TimestampMixin):
     physician_id = Column(UUID(as_uuid=True), ForeignKey("physicians.id"))
     location_id = Column(UUID(as_uuid=True), ForeignKey("locations.id"))
     is_active = Column(Boolean, default=True)
-
+    org_id = Column(UUID(as_uuid=True), ForeignKey(
+        "organizations.id"), nullable=False)
     physician = relationship("Physician", back_populates="locations")
     location = relationship("Location", back_populates="physicians")

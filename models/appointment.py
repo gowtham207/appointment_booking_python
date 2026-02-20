@@ -20,6 +20,8 @@ class Appointment(Base, TimestampMixin):
     slot_id = Column(UUID(as_uuid=True), ForeignKey("slots.id"))
     status_id = Column(UUID(as_uuid=True), ForeignKey("appointment_status.id"))
     booked_by = Column(UUID(as_uuid=True), ForeignKey("users.id"))
+    org_id = Column(UUID(as_uuid=True), ForeignKey(
+        "organizations.id"), nullable=False)
 
     notes = Column(Text)
 
