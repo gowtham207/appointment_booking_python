@@ -17,7 +17,6 @@ def generate_user_token(user_id: str) -> dict:
     access_token = generate_access_token({'user_id': str(user_id)})
     refresh_token = generate_refresh_token({'user_id': str(user_id)})
     id_token = generate_id_token({'user_id': str(user_id)})
-    user.last_login = datetime.utcnow()
     return {
         "access_token": access_token,
         "refresh_token": refresh_token,

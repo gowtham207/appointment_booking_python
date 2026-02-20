@@ -31,6 +31,8 @@ class LocationService:
     @exception_handler
     def get_all_locations(self) -> ResponseModel:
         locations = self.location_repo.get_all_locations()
+        if locations is None:
+            return ResponseModel(success=False, message="No locations found")
         return ResponseModel(success=True, message="Locations retrieved successfully", data={"locations": locations})
 
     @exception_handler

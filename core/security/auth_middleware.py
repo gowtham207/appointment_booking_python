@@ -1,11 +1,17 @@
-from fastapi import requests, status
+from fastapi import Request, status
 from fastapi.responses import JSONResponse
 from jose import jwt, JWTError
 from config import SECRET_KEY, ID_SECRET_KEY
+from starlette.middleware.base import BaseHTTPMiddleware
 
 
-class AuthMiddleware:
-    async def __call__(self, req: requests, call_next):
+class AuthMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, req: Request, call_next):
+        print(f"AuthMiddleware: Processing request for {req.url.path}")
+        if req.url.path.lower() in ["/docs", "/redoc", "/openapi.json", "/health", '/api/v1/patients'] or req.url.path.startswith("/auth"):
+            print("AuthMiddleware: Skipping authentication for public endpoint")
+            return await call_next(req)
+
         if req.url.path.startswith("/api/v1/") and req.method.upper() in ["GET", "HEAD", "OPTIONS"]:
             auth_header = req.headers.get("Authorization")
             if auth_header is None or not auth_header.startswith("Bearer "):
@@ -19,10 +25,17 @@ class AuthMiddleware:
             except JWTError:
                 return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content={"detail": "Invalid token"})
             return await call_next(req)
+        return await call_next(req)
 
 
-class PostAuthMiddleware:
-    async def __call__(self, req: requests, call_next):
+class PostAuthMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, req: Request, call_next):
+        print(f"AuthMiddleware: Processing request for {req.url.path}")
+
+        if req.url.path.lower() in ["/docs", "/redoc", "/openapi.json", "/health", '/api/v1/patients'] or req.url.path.startswith("/auth"):
+            print("AuthMiddleware: Skipping authentication for public endpoint")
+            return await call_next(req)
+
         if req.url.path.startswith("/api/v1/") and req.method.upper() in ["POST", "PUT", "DELETE"]:
             auth_header = req.headers.get("Authorization")
             if auth_header is None or not auth_header.startswith("Bearer "):
@@ -36,3 +49,4 @@ class PostAuthMiddleware:
             except JWTError:
                 return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content={"detail": "Invalid token"})
             return await call_next(req)
+        return await call_next(req)

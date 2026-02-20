@@ -6,6 +6,7 @@ __pycache__/
 *$py.class
 */__pycache__/
 *\__pycache__\
+*.py[cod]
 # Virtual environments
 venv/
 .env/

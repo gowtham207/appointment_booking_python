@@ -4,7 +4,7 @@ from core.database import engine, Base
 from models import *
 from api.router import api_router
 from core.security.auth_middleware import AuthMiddleware, PostAuthMiddleware
-
+from core.swagger import swagger_auth
 
 def init_db():  # initialize DB
     Base.metadata.create_all(bind=engine)

@@ -12,6 +12,8 @@ def exception_handler(func: Callable[ParamType, ReturnType]) -> Callable[ParamTy
         try:
             return func(*args, **kwargs)
         except Exception as err:
-            print(f"Error in login_user: {e}", flush=True)
+            print(f"Error in login_user: {err}", flush=True)
+            import traceback
+            print(traceback.format_exc(), flush=True)
             return JSONResponse(status_code=500, content={"message": "Internal Server Error"})
     return wrapper
